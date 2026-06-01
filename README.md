@@ -1,0 +1,1 @@
+# G7-Dividie-e-Conquistar--In-Sync
