@@ -1,86 +1,71 @@
-# Jogo de Sintonia — In-Sync (Grupo 7)
+Temas:
+ - Algoritmos Ambiciosos
 
-Este é um projeto acadêmico desenvolvido para a disciplina de **Projeto de Algoritmos (PA)**, com foco no paradigma de **Dividir e Conquistar**. O projeto consiste em um jogo gamificado e interativo de afinidades chamado **In-Sync**, que mede a sinergia entre duplas de jogadores baseado em suas preferências pessoais utilizando o clássico algoritmo de **Contagem de Inversões**.
+# Dungeon Adventure — Mochila da Fortuna
 
----
+**Conteúdo da Disciplina**: Algoritmos Ambiciosos (Greedy)<br>
 
-## 🎮 O Jogo: In-Sync
+## Alunos
 
-No jogo, duas duplas competem para ver qual delas tem mais sinergia.
-1. É escolhido um tema (ex: *Bandas de Rock*, *Fast Foods*, *Filmes de Heróis*, *Redes Sociais*).
-2. O sistema gera uma lista com 10 itens daquele tema.
-3. Cada jogador da dupla monta, individualmente e em segredo, o seu **Top 5** ordenado de preferências daqueles 10 itens.
-4. O algoritmo calcula o número de **Inversões** entre o Top 5 de ambos os jogadores.
-5. A dupla com menor quantidade de inversões (maior sinergia/sintonia) vence a competição!
+| Matrícula  | Aluno                     |
+| ---------- | ------------------------- |
+| 232014638  | Caio Soares de Andrade    |
+| 231011408  | Guilherme Flyan Araujo    |
 
----
+## Sobre
 
-## 🧠 Paradigma de Dividir e Conquistar: Contagem de Inversões
+O **Dungeon Adventure** é uma aplicação web interativa e pedagógica que demonstra o funcionamento do **algoritmo ambicioso da Mochila Fracionária (Fractional Knapsack)**. O jogador assume o papel de um aventureiro que encontra 9 relíquias mágicas em uma dungeon e precisa escolher quais levar em sua mochila de **74 kg** de capacidade, maximizando o valor total.
 
-Para calcular a sinergia entre os dois jogadores, nós mapeamos o Top 5 de preferências do Jogador B em relação às posições escolhidas pelo Jogador A. A discrepância entre as listas é dada pela quantidade de **inversões** de ordem.
+## Screenshots
 
-Uma **inversão** em um vetor `arr` é um par de índices `(i, j)` tal que `i < j` e `arr[i] > arr[j]`. 
+<img width="452" height="550" alt="image" src="https://github.com/user-attachments/assets/46d357a7-e451-48dd-9712-e8ec03661536" />
+<img width="351" height="394" alt="image" src="https://github.com/user-attachments/assets/5330d6a9-1706-4f18-9b46-135bab5f78ba" />
+<img width="387" height="436" alt="image" src="https://github.com/user-attachments/assets/94ef8c21-6240-46d5-ae8e-c72ab1fc08f3" />
+<img width="646" height="401" alt="image" src="https://github.com/user-attachments/assets/39270d1c-9646-42e1-84df-1418c60f6e45" />
 
-### Algoritmo O(n log n)
-Em vez de verificar cada par de forma ingênua em tempo quadrático $O(n^2)$, utilizamos o paradigma de **Dividir e Conquistar** adaptando o algoritmo do **Merge Sort**:
 
-1. **Dividir**: O vetor de posições relativas é dividido ao meio.
-2. **Conquistar**: Contamos recursivamente as inversões na metade esquerda e na metade direita.
-3. **Combinar**: Ao mesclar (*merge*) os dois subarrays já ordenados, sempre que um elemento do subarray **direito** é menor que um elemento do subarray **esquerdo**, significa que esse elemento direito inverte sua ordem em relação a **todos os elementos restantes não consumidos** na metade esquerda. Adicionamos `(left.length - i)` inversões de uma vez só!
+## Instalação
 
-A complexidade final é de **$O(n \log n)$**, o que torna a análise extremamente ágil e eficiente!
+**Linguagem**: TypeScript<br>
+**Framework**: Next.js 16 (App Router)<br>
+**Estilização**: Tailwind CSS 4<br>
+**Pré-Requisitos**: Node.js v20+<br>
+### Acesso deploy
+[Link da aventura](https://g7-greed-pa-26-1-dungeon-adventure.vercel.app/)
 
----
+### Como rodar localmente
 
-## 🚀 Tecnologias Utilizadas
+```bash
+# 1. clone o repositório
+git clone https://github.com/projeto-de-algoritmos-2026/G7_Greed_PA-26.1-Dungeon-Adventure.git
 
-O projeto foi construído utilizando uma stack moderna e robusta para web:
-* **Core**: [Next.js 16](https://nextjs.org/) (App Router)
-* **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
-* **Interface**: [React 19](https://react.dev/)
-* **Estilização**: [Tailwind CSS 3/4](https://tailwindcss.com/)
-* **Interações**: Micro-animações nativas CSS e componentes premium.
+# 2. entre na pasta do projeto
+cd G7_Greed_PA-26.1-Dungeon-Adventure
 
----
+# 3. instale as dependências
+npm install
 
-## ⚙️ Como Instalar e Executar Localmente
-
-Siga o passo a passo para rodar o projeto em sua máquina local:
-
-1. **Acesse a pasta do projeto**:
-   ```bash
-   cd G7-Dividir-e-Conquistar--In-Sync
-   ```
-
-2. **Instale as dependências**:
-   ```bash
-   npm install
-   ```
-
-3. **Inicie o servidor de desenvolvimento**:
-   ```bash
-   npm run dev
-   ```
-
-4. **Abra no seu navegador**:
-   Acesse [http://localhost:3000](http://localhost:3000) para começar a jogar!
-
----
-
-## 📂 Estrutura de Pastas Principal
-
-```text
-G7-Dividir-e-Conquistar--In-Sync/
-├── public/              # Assets estáticos
-├── src/
-│   ├── app/             # Rotas e layouts principais do Next.js App Router
-│   │   ├── api/         # Endpoints da API para cálculo da sinergia
-│   │   └── page.tsx     # Página principal do jogo
-│   ├── components/      # Componentes visuais do fluxo (Setup, Ranking, Cálculo, Resultados, Transição)
-│   └── lib/             # Módulos de lógica do algoritmo e utilitários
-│       ├── inversionCounter.ts  # Implementação em Dividir e Conquistar (Merge Sort adaptado)
-│       ├── rankingUtils.ts      # Cálculo de mapeamento e pontuação
-│       └── types.ts             # Definição de tipos TypeScript e presets
-├── package.json         # Dependências e scripts
-└── tsconfig.json        # Configuração do TypeScript
+# 4. inicie o servidor de desenvolvimento
+npm run dev
 ```
+
+A aplicação estará disponível em **http://localhost:3000**.
+
+## Uso
+
+Ao abrir a aplicação:
+
+1. Na **tela inicial**, o personagem apresenta a história. Clique no botão para avançar.
+2. Na **galeria de relíquias**, veja todos os 9 itens disponíveis. Clique no botão para continuar.
+3. Na **tela de escolha**, selecione o algoritmo **Knapsack** (as outras opções ficam em vermelho indicando que estão erradas). Após selecionar corretamente, o botão de avançar aparece.
+4. Na **tela de execução**, clique em **INICIAR** e depois em **PRÓXIMO PASSO** para ver cada decisão do algoritmo ambicioso em tempo real. Uma barra de progresso mostra a capacidade sendo preenchida e a fortuna sendo acumulada.
+5. Ao final, a **tela de resultado** exibe a mochila completa com todos os itens selecionados e o valor total obtido.
+
+
+## Outros
+
+O projeto **não utiliza backend separado** — toda a lógica do algoritmo roda nas API Routes do Next.js (server-side), mantendo a arquitetura unificada em um único framework.
+
+## Video explicativo
+[vÍDEO](https://www.youtube.com/watch?v=arIWizzSzdQ)
+
