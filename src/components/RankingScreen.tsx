@@ -128,16 +128,14 @@ export default function RankingScreen({
             {slots.map((item, idx) => (
               <div
                 key={idx}
-                className={`flex items-center gap-0 rounded-xl border transition-all duration-200 ${
-                  item
+                className={`flex items-center gap-0 rounded-xl border transition-all duration-200 ${item
                     ? slotColors[idx]
                     : "border-dashed border-white/15 bg-white/[0.02]"
-                }`}
+                  }`}
               >
                 {/* Posição */}
-                <div className={`flex items-center justify-center w-12 h-14 rounded-l-xl font-black text-lg border-r ${
-                  item ? "border-inherit" : "border-white/10"
-                }`}>
+                <div className={`flex items-center justify-center w-12 h-14 rounded-l-xl font-black text-lg border-r ${item ? "border-inherit" : "border-white/10"
+                  }`}>
                   {idx + 1}º
                 </div>
 
@@ -192,11 +190,10 @@ export default function RankingScreen({
                     key={item}
                     onClick={() => addToSlot(item)}
                     disabled={allFilled}
-                    className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
-                      allFilled
+                    className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${allFilled
                         ? "bg-white/5 border-white/10 text-white/30 cursor-not-allowed"
                         : "bg-white/5 border-white/15 text-white hover:bg-white/15 hover:border-white/30 active:scale-95 cursor-pointer"
-                    }`}
+                      }`}
                   >
                     {item}
                   </button>
@@ -212,11 +209,10 @@ export default function RankingScreen({
             id="ranking-confirm-btn"
             onClick={handleConfirm}
             disabled={!allFilled}
-            className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all active:scale-95 uppercase tracking-wider ${
-              allFilled
+            className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all active:scale-95 uppercase tracking-wider ${allFilled
                 ? `${btnColor(playerIndex)} hover:opacity-90`
                 : "bg-white/10 text-white/30 cursor-not-allowed"
-            }`}
+              }`}
           >
             {allFilled ? "Confirmar Top 5" : `Selecione mais ${5 - slots.filter((s) => s !== null).length} item(ns)`}
           </button>
