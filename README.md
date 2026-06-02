@@ -1,9 +1,9 @@
 Temas:
- - Algoritmos Ambiciosos
+ - Dividir e Conquistar
 
-# Dungeon Adventure — Mochila da Fortuna
+# In Sync — Jogo da Sintonia
 
-**Conteúdo da Disciplina**: Algoritmos Ambiciosos (Greedy)<br>
+**Conteúdo da Disciplina**: Dividir e Conquistar<br>
 
 ## Alunos
 
@@ -14,7 +14,7 @@ Temas:
 
 ## Sobre
 
-O **Dungeon Adventure** é uma aplicação web interativa e pedagógica que demonstra o funcionamento do **algoritmo ambicioso da Mochila Fracionária (Fractional Knapsack)**. O jogador assume o papel de um aventureiro que encontra 9 relíquias mágicas em uma dungeon e precisa escolher quais levar em sua mochila de **74 kg** de capacidade, maximizando o valor total.
+O **In Sync — Jogo da Sintonia** é uma aplicação web interativa e pedagógica que demonstra o funcionamento do algoritmo dividir e conquistar **Counting Inversions**. Os jogadores de cada dupla formam uma lista cada um rankeando de acordo com o tema suas preferências, por fim a dupla que tiver menos inversões é a dupla com maior sintonia e vence o jogo.
 
 ## Screenshots
 
@@ -31,7 +31,7 @@ O **Dungeon Adventure** é uma aplicação web interativa e pedagógica que demo
 **Estilização**: Tailwind CSS 4<br>
 **Pré-Requisitos**: Node.js v20+<br>
 ### Acesso deploy
-[Link da aventura](https://g7-greed-pa-26-1-dungeon-adventure.vercel.app/)
+[In Sync - Jogo da Sintonia](https://g7-greed-pa-26-1-dungeon-adventure.vercel.app/)
 
 ### Como rodar localmente
 
