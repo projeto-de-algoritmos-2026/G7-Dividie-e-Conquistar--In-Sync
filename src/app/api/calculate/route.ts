@@ -1,22 +1,16 @@
-// ============================================================
-// API ROUTE: POST /api/calculate
-// ============================================================
-//
-// Recebe os rankings de todos os 4 jogadores (2 duplas),
-// executa o algoritmo de Dividir e Conquistar para o tema único,
-// e retorna os resultados completos.
-//
-// Request Body: GameInput
-// Response: GameResult
-// ============================================================
+/**
+ * API ROUTE: POST /api/calculate
+ *
+ * Recebe os rankings de todos os 4 jogadores (2 duplas)
+ * e os 5 itens do tema, executa o algoritmo de Dividir e
+ * Conquistar, e retorna os resultados.
+ */
 
 import { NextRequest, NextResponse } from "next/server";
 import { GameInput, GameResult } from "@/lib/types";
 import { computeDuoResult } from "@/lib/rankingUtils";
 
-// ---------------------------------------------------------------------------
-// Validação de entrada
-// ---------------------------------------------------------------------------
+/** Validação de entrada */
 function validateGameInput(body: unknown): { valid: boolean; error?: string } {
   if (!body || typeof body !== "object") {
     return { valid: false, error: "Corpo da requisição inválido." };
@@ -32,6 +26,9 @@ function validateGameInput(body: unknown): { valid: boolean; error?: string } {
   }
   if (!Array.isArray(input.duo2) || input.duo2.length !== 2) {
     return { valid: false, error: "duo2 deve ter exatamente 2 jogadores." };
+  }
+  if (!Array.isArray(input.themeItems) || input.themeItems.length !== 5) {
+    return { valid: false, error: "themeItems deve ter exatamente 5 itens." };
   }
 
   const allPlayers = [...input.duo1, ...input.duo2] as Record<string, unknown>[];
@@ -64,9 +61,7 @@ function validateGameInput(body: unknown): { valid: boolean; error?: string } {
   return { valid: true };
 }
 
-// ---------------------------------------------------------------------------
-// Handler POST
-// ---------------------------------------------------------------------------
+/** Handler POST */
 export async function POST(request: NextRequest) {
   let body: unknown;
 
@@ -91,12 +86,14 @@ export async function POST(request: NextRequest) {
   const duo1Result = computeDuoResult(
     1,
     input.themeName,
+    input.themeItems,
     input.duo1[0],
     input.duo1[1]
   );
   const duo2Result = computeDuoResult(
     2,
     input.themeName,
+    input.themeItems,
     input.duo2[0],
     input.duo2[1]
   );

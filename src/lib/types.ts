@@ -1,53 +1,42 @@
-// ============================================================
-// TYPES & CONSTANTS: Jogo de Sintonia — Top 5 de 10
-// ============================================================
+/**
+ * Types and interfaces for the Top 5 synergy game.
+ */
 
-export type PlayerRanking = string[]; // Exatamente 5 itens ordenados (Top 5)
+export type PlayerRanking = string[];
 
 export interface PlayerInput {
   name: string;
-  ranking: PlayerRanking; // 5 itens
+  ranking: PlayerRanking;
 }
 
-// Preset de um tema para o Setup (10 itens)
+/** Preset themes — each has exactly 5 items */
 export interface ThemePreset {
   themeName: string;
-  items: string[]; // length = 10
+  items: string[];
 }
 
 export const DEFAULT_THEME_PRESETS: ThemePreset[] = [
   {
     themeName: "Top 5 Bandas/Artistas",
-    items: [
-      "Queen", "Beatles", "Michael Jackson", "Madonna", "Metallica",
-      "Coldplay", "Nirvana", "Led Zeppelin", "Pink Floyd", "AC/DC",
-    ],
+    items: ["Queen", "Beatles", "Michael Jackson", "Madonna", "Metallica"],
   },
   {
     themeName: "Top 5 Fast Foods",
-    items: [
-      "McDonalds", "Burger King", "KFC", "Subway", "Pizza Hut",
-      "Taco Bell", "Dominos", "Popeyes", "Wendys", "Chick-fil-A",
-    ],
+    items: ["McDonalds", "Burger King", "KFC", "Subway", "Bobs"],
   },
   {
     themeName: "Top 5 Filmes de Herois",
-    items: [
-      "Homem-Aranha", "Batman", "Vingadores", "Superman", "Mulher-Maravilha",
-      "Homem de Ferro", "X-Men", "Pantera Negra", "Guardioes da Galaxia", "Deadpool",
-    ],
+    items: ["Homem-Aranha", "Batman", "Vingadores", "Superman", "Mulher-Maravilha"],
   },
   {
     themeName: "Top 5 Redes Sociais",
-    items: [
-      "Instagram", "TikTok", "Twitter", "YouTube", "Facebook",
-      "LinkedIn", "Pinterest", "Snapchat", "Reddit", "WhatsApp",
-    ],
+    items: ["Instagram", "TikTok", "Twitter", "YouTube", "Facebook"],
   },
 ];
 
 export interface GameInput {
   themeName: string;
+  themeItems: string[];
   duo1: [PlayerInput, PlayerInput];
   duo2: [PlayerInput, PlayerInput];
 }
@@ -56,7 +45,6 @@ export interface MergeStep {
   description: string;
 }
 
-// Tipo detalhado para o passo do Merge Sort (usado internamente)
 export interface MergeSortStep extends MergeStep {
   left: number[];
   right: number[];
@@ -66,19 +54,14 @@ export interface MergeSortStep extends MergeStep {
 
 export interface ThemeResult {
   theme: string;
-  player1Ranking: string[]; // Top 5 do jogador 1
-  player2Ranking: string[]; // Top 5 do jogador 2
-
-  // Análise de interseção
-  sharedItems: string[];       // itens em ambos os Top 5
-  exclusivePlayer1: string[];  // só no Top 5 do jogador 1
-  exclusivePlayer2: string[];  // só no Top 5 do jogador 2
-  allUniqueItems: string[];    // união de ambos os Top 5
+  items: string[];
+  player1Ranking: string[];
+  player2Ranking: string[];
 
   // Resultado do algoritmo
   mappingVector: number[];
   inversions: number;
-  maxInversions: number; // Máximo absoluto de inversões possíveis (35)
+  maxInversions: number; // 10 para Top 5
   synergy: number; // 0 a 100
   sortedSteps: MergeStep[];
 }
