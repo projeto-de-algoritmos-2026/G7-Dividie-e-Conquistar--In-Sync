@@ -49,7 +49,7 @@ export default function TransitionScreen({
             <p className="text-white/70 text-base leading-relaxed">
               Passe o dispositivo para{" "}
               <span className="text-white font-semibold">{nextPlayerName}</span>{" "}
-              e clique em <span className="text-white font-semibold">"Estou pronto!"</span>{" "}
+              e clique em <span className="text-white font-semibold">&quot;Estou pronto!&quot;</span>{" "}
               quando estiver só.
             </p>
           </div>
