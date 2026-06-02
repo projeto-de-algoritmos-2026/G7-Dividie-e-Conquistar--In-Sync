@@ -53,7 +53,7 @@ function AlgorithmDetail({ themeResult, duoName }: { themeResult: ThemeResult; d
             </div>
 
             <p className="text-white/40 text-xs mt-2">
-              {themeResult.inversions} inversão(ões) sobre {themeResult.mappingVector.length} itens · Máx: {themeResult.maxInversions} inversões
+              {themeResult.inversions} inversão(ões) · Máx: {themeResult.maxInversions}
             </p>
           </div>
 
@@ -92,11 +92,6 @@ function DuoCard({ duoResult, duoLabel, isWinner, color }: {
     ? "border-cyan-500/20"
     : "border-purple-500/20";
 
-  const { sharedItems, exclusivePlayer1, exclusivePlayer2 } = duoResult.themeResult;
-
-  // Para colorir itens compartilhados vs exclusivos no ranking
-  const sharedSet = new Set(sharedItems.map((s) => s.toLowerCase()));
-
   return (
     <div className={`glass rounded-3xl p-6 border ${borderClass}`}>
       {isWinner && (
@@ -118,52 +113,34 @@ function DuoCard({ duoResult, duoLabel, isWinner, color }: {
         <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Sintonia Final</p>
         <SynergyBar synergy={duoResult.averageSynergy} color={color} />
         <p className="text-white/30 text-xs mt-2 text-right">
-          {duoResult.totalInversions} inversão(ões) sobre {duoResult.themeResult.mappingVector.length} itens · Máx: {duoResult.themeResult.maxInversions}
+          {duoResult.totalInversions} inversão(ões) · Máx: {duoResult.themeResult.maxInversions}
         </p>
       </div>
 
       {/* Comparativo de Rankings */}
       <div className="border-t border-white/10 pt-5">
-        <p className="text-white/40 text-xs uppercase tracking-wider mb-4">Top 5 de cada jogador</p>
+        <p className="text-white/40 text-xs uppercase tracking-wider mb-4">Ordem de cada jogador</p>
         <div className="flex gap-4 text-sm">
           <div className="flex-1">
             <p className="text-white/60 font-semibold mb-2 truncate">{duoResult.players[0]}</p>
             <ol className="list-decimal list-inside space-y-1">
-              {duoResult.themeResult.player1Ranking.map((item, idx) => {
-                const isShared = sharedSet.has(item.toLowerCase());
-                return (
-                  <li key={idx} className={`truncate ${isShared ? "text-green-400/80" : "text-red-400/60"}`}>
-                    {item}
-                  </li>
-                );
-              })}
+              {duoResult.themeResult.player1Ranking.map((item, idx) => (
+                <li key={idx} className="truncate text-white/80">
+                  {item}
+                </li>
+              ))}
             </ol>
           </div>
           <div className="w-px bg-white/10"></div>
           <div className="flex-1">
             <p className="text-white/60 font-semibold mb-2 truncate">{duoResult.players[1]}</p>
             <ol className="list-decimal list-inside space-y-1">
-              {duoResult.themeResult.player2Ranking.map((item, idx) => {
-                const isShared = sharedSet.has(item.toLowerCase());
-                return (
-                  <li key={idx} className={`truncate ${isShared ? "text-green-400/80" : "text-red-400/60"}`}>
-                    {item}
-                  </li>
-                );
-              })}
+              {duoResult.themeResult.player2Ranking.map((item, idx) => (
+                <li key={idx} className="truncate text-white/80">
+                  {item}
+                </li>
+              ))}
             </ol>
-          </div>
-        </div>
-
-        {/* Legenda */}
-        <div className="flex gap-4 mt-4 text-xs text-white/40">
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-green-400/60"></div>
-            Em comum ({sharedItems.length})
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-red-400/60"></div>
-            Exclusivo ({exclusivePlayer1.length + exclusivePlayer2.length})
           </div>
         </div>
       </div>
@@ -213,7 +190,7 @@ export default function ResultsScreen({ result, onRestart }: Props) {
               <div className="text-left">
                 <p className="text-white font-bold text-lg">Visualização do Algoritmo</p>
                 <p className="text-white/50 text-sm">
-                  Merge Sort (Contagem de Inversões sobre Top 5)
+                  Merge Sort (Contagem de Inversões)
                 </p>
               </div>
             </div>
@@ -223,19 +200,19 @@ export default function ResultsScreen({ result, onRestart }: Props) {
           {showAlgorithm && (
             <div className="px-6 pb-6 space-y-6 animate-slide-up">
               <div className="glass rounded-xl p-5 text-sm text-white/70 leading-relaxed border border-cyan-500/20">
-                <p className="font-mono text-cyan-400 mb-3 font-semibold">// Como Funciona?</p>
+                <p className="font-mono text-cyan-400 mb-3 font-semibold">{"// Como Funciona?"}</p>
                 <ul className="space-y-3 list-disc pl-5">
                   <li>
-                    <strong className="text-white">Top 5 Estrito:</strong> Cada jogador escolhe e ordena exatamente 5 itens de um pool de 10. Somente esses 5 itens são comparados.
+                    <strong className="text-white">Mesmos 5 Itens:</strong> Ambos os jogadores da dupla recebem os mesmos 5 itens e apenas reordenam de acordo com sua preferência.
                   </li>
                   <li>
-                    <strong className="text-white">Vetor de Mapeamento (tamanho 5):</strong> Para cada item do Top 5 do Jogador 1 (posições 1 a 5), registramos a posição que o Jogador 2 deu a esse mesmo item. Itens ausentes no Top 5 do outro jogador recebem posição 6.
+                    <strong className="text-white">Vetor de Mapeamento:</strong> Para cada item na ordem do Jogador 1, registramos a posição que o Jogador 2 atribuiu. O resultado é uma permutação de [1, 2, 3, 4, 5].
                   </li>
                   <li>
-                    <strong className="text-white">Merge Sort (Inversões):</strong> Aplicamos o algoritmo de Dividir e Conquistar para contar inversões no vetor de tamanho fixo 5. O número máximo possível de inversões é <strong className="text-cyan-400">10</strong> (5 × 4 / 2).
+                    <strong className="text-white">Merge Sort (Inversões):</strong> Aplicamos o algoritmo de Dividir e Conquistar para contar inversões. O número máximo possível é <strong className="text-cyan-400">10</strong> (C(5,2) = 5×4/2).
                   </li>
                   <li>
-                    <strong className="text-white">Sintonia Final:</strong> Normalizada linearmente: <em>(10 − inversões) / 10 × 100%</em>. Ordem idêntica = 100%, ordem totalmente invertida = 0%.
+                    <strong className="text-white">Sintonia Final:</strong> Normalizada linearmente: <em>(10 − inversões) / 10 × 100%</em>. Ordem idêntica = 100%, completamente invertida = 0%.
                   </li>
                 </ul>
               </div>

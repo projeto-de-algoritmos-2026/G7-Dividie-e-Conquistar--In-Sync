@@ -7,7 +7,7 @@ interface Props {
   playerIndex: 0 | 1 | 2 | 3;
   duoName: string;
   themeName: string;
-  themeItems: string[]; // 10 itens disponíveis
+  themeItems: string[]; // 5 itens fixos
   onComplete: (ranking: string[]) => void;
 }
 
@@ -35,31 +35,8 @@ export default function RankingScreen({
   themeItems,
   onComplete,
 }: Props) {
-  // Top 5 slots (null = vazio)
-  const [slots, setSlots] = useState<(string | null)[]>([null, null, null, null, null]);
-
-  // Itens que já foram colocados nos slots
-  const usedItems = new Set(slots.filter((s): s is string => s !== null));
-
-  // Pool = itens disponíveis que ainda não estão nos slots
-  const pool = themeItems.filter((item) => !usedItems.has(item));
-
-  // Adicionar item da pool ao próximo slot vazio
-  function addToSlot(item: string) {
-    const newSlots = [...slots];
-    const emptyIdx = newSlots.findIndex((s) => s === null);
-    if (emptyIdx !== -1) {
-      newSlots[emptyIdx] = item;
-      setSlots(newSlots);
-    }
-  }
-
-  // Remover item de um slot (devolver à pool)
-  function removeFromSlot(slotIndex: number) {
-    const newSlots = [...slots];
-    newSlots[slotIndex] = null;
-    setSlots(newSlots);
-  }
+  // Todos os 5 itens já estão nos slots desde o início
+  const [slots, setSlots] = useState<string[]>([...themeItems]);
 
   // Mover item entre slots (reordenar)
   function swapSlots(fromIdx: number, toIdx: number) {
@@ -71,24 +48,24 @@ export default function RankingScreen({
     setSlots(newSlots);
   }
 
-  // Mover slot para cima
   function moveUp(idx: number) {
     if (idx <= 0) return;
     swapSlots(idx, idx - 1);
   }
 
-  // Mover slot para baixo
   function moveDown(idx: number) {
     if (idx >= 4) return;
     swapSlots(idx, idx + 1);
   }
 
-  // Confirmar — só permite se todos os 5 slots estão preenchidos
-  const allFilled = slots.every((s) => s !== null);
-
   function handleConfirm() {
-    if (!allFilled) return;
-    onComplete(slots as string[]);
+    onComplete(slots);
+  }
+
+  // Embaralhar aleatoriamente para demonstrações
+  function fillRandomly() {
+    const shuffled = [...themeItems].sort(() => 0.5 - Math.random());
+    setSlots(shuffled);
   }
 
   return (
@@ -118,104 +95,66 @@ export default function RankingScreen({
 
           {/* Instrução */}
           <p className="text-white/60 text-sm mb-5 border-l-2 border-white/20 pl-3">
-            Clique nos itens abaixo para montar o seu <span className="text-white font-semibold">Top 5</span>.
-            Use as setas para reordenar. Clique num slot preenchido para remover.
+            Reordene os itens abaixo usando as setas para montar o seu{" "}
+            <span className="text-white font-semibold">Top 5</span>.
           </p>
 
-          {/* ═══ TOP 5 SLOTS ═══ */}
+          {/* TOP 5 SLOTS */}
           <div className="space-y-2 mb-6">
             <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Seu Top 5</p>
             {slots.map((item, idx) => (
               <div
-                key={idx}
-                className={`flex items-center gap-0 rounded-xl border transition-all duration-200 ${item
-                    ? slotColors[idx]
-                    : "border-dashed border-white/15 bg-white/[0.02]"
-                  }`}
+                key={`${item}-${idx}`}
+                className={`flex items-center gap-0 rounded-xl border transition-all duration-200 ${slotColors[idx]}`}
               >
                 {/* Posição */}
-                <div className={`flex items-center justify-center w-12 h-14 rounded-l-xl font-black text-lg border-r ${item ? "border-inherit" : "border-white/10"
-                  }`}>
+                <div className={`flex items-center justify-center w-12 h-14 rounded-l-xl font-black text-lg border-r border-inherit`}>
                   {idx + 1}º
                 </div>
 
                 {/* Conteúdo do slot */}
-                {item ? (
-                  <button
-                    onClick={() => removeFromSlot(idx)}
-                    className="flex-1 text-left py-3 px-3 font-medium select-none hover:opacity-70 transition-opacity cursor-pointer"
-                    title="Clique para remover"
-                  >
-                    {item}
-                    <span className="text-[10px] ml-2 opacity-40">(remover)</span>
-                  </button>
-                ) : (
-                  <div className="flex-1 py-3 px-3 text-white/20 text-sm italic select-none">
-                    Vazio — clique num item abaixo
-                  </div>
-                )}
+                <div className="flex-1 py-3 px-3 font-medium select-none">
+                  {item}
+                </div>
 
                 {/* Controles de Subir/Descer */}
-                {item && (
-                  <div className="flex flex-col border-l border-inherit h-14">
-                    <button
-                      onClick={() => moveUp(idx)}
-                      disabled={idx === 0}
-                      className="flex-1 px-3 hover:bg-white/10 rounded-tr-xl disabled:opacity-20 transition-colors text-white/50"
-                    >
-                      ▲
-                    </button>
-                    <button
-                      onClick={() => moveDown(idx)}
-                      disabled={idx === 4}
-                      className="flex-1 px-3 hover:bg-white/10 rounded-br-xl disabled:opacity-20 transition-colors text-white/50"
-                    >
-                      ▼
-                    </button>
-                  </div>
-                )}
+                <div className="flex flex-col border-l border-inherit h-14">
+                  <button
+                    onClick={() => moveUp(idx)}
+                    disabled={idx === 0}
+                    className="flex-1 px-3 hover:bg-white/10 rounded-tr-xl disabled:opacity-20 transition-colors text-white/50 cursor-pointer"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    onClick={() => moveDown(idx)}
+                    disabled={idx === 4}
+                    className="flex-1 px-3 hover:bg-white/10 rounded-br-xl disabled:opacity-20 transition-colors text-white/50 cursor-pointer"
+                  >
+                    ▼
+                  </button>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* ═══ POOL DE ITENS ═══ */}
-          <div className="mb-8">
-            <p className="text-white/40 text-xs uppercase tracking-widest mb-3">
-              Itens Disponíveis ({pool.length})
-            </p>
-            {pool.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {pool.map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => addToSlot(item)}
-                    disabled={allFilled}
-                    className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${allFilled
-                        ? "bg-white/5 border-white/10 text-white/30 cursor-not-allowed"
-                        : "bg-white/5 border-white/15 text-white hover:bg-white/15 hover:border-white/30 active:scale-95 cursor-pointer"
-                      }`}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <p className="text-white/30 text-sm italic">Todos os itens foram selecionados.</p>
-            )}
-          </div>
+          {/* Botões de Ação */}
+          <div className="flex flex-col gap-3">
+            <button
+              id="ranking-confirm-btn"
+              onClick={handleConfirm}
+              className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all active:scale-95 uppercase tracking-wider ${btnColor(playerIndex)} hover:opacity-90 cursor-pointer`}
+            >
+              Confirmar Top 5
+            </button>
 
-          {/* Botão de confirmar */}
-          <button
-            id="ranking-confirm-btn"
-            onClick={handleConfirm}
-            disabled={!allFilled}
-            className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all active:scale-95 uppercase tracking-wider ${allFilled
-                ? `${btnColor(playerIndex)} hover:opacity-90`
-                : "bg-white/10 text-white/30 cursor-not-allowed"
-              }`}
-          >
-            {allFilled ? "Confirmar Top 5" : `Selecione mais ${5 - slots.filter((s) => s !== null).length} item(ns)`}
-          </button>
+            <button
+              onClick={fillRandomly}
+              className="w-full py-3 rounded-xl font-bold text-sm text-white/60 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white transition-all active:scale-95 uppercase tracking-wider cursor-pointer"
+            >
+              Embaralhar Aleatoriamente
+            </button>
+          </div>
         </div>
       </div>
     </div>

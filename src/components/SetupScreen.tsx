@@ -15,28 +15,30 @@ export default function SetupScreen({ initialSetup, onComplete }: Props) {
   ]);
   const [themeName, setThemeName] = useState<string>(initialSetup.themeName);
   const [themeItems, setThemeItems] = useState<string[]>(
-    initialSetup.themeItems.length === 10
+    initialSetup.themeItems.length === 5
       ? initialSetup.themeItems
-      : ["", "", "", "", "", "", "", "", "", ""]
+      : ["", "", "", "", ""]
   );
   const [errors, setErrors] = useState<string[]>([]);
 
   function validate(): boolean {
     const errs: string[] = [];
+
     playerNames.forEach((n, i) => {
       if (!n.trim()) errs.push(`Nome do Jogador ${i + 1} é obrigatório.`);
     });
+
     if (!themeName.trim()) {
       errs.push("Você precisa escolher ou digitar um tema para o jogo.");
     }
+
     if (themeItems.some((i) => !i.trim())) {
-      errs.push("Todos os 10 itens do tema precisam estar preenchidos.");
+      errs.push("Todos os 5 itens do tema precisam estar preenchidos.");
     }
 
-    // Check for unique items
     const unique = new Set(themeItems.map((i) => i.trim().toLowerCase()));
-    if (unique.size !== 10 && !themeItems.some((i) => !i.trim())) {
-      errs.push("Os 10 itens devem ser diferentes entre si.");
+    if (unique.size !== 5 && themeItems.every((i) => i.trim())) {
+      errs.push("Os 5 itens devem ser diferentes entre si.");
     }
 
     setErrors(errs);
@@ -94,9 +96,12 @@ export default function SetupScreen({ initialSetup, onComplete }: Props) {
             Tema do Jogo
           </h3>
           <p className="text-white/60 text-sm mb-4">
-            Escolha uma sugestão ou crie seu próprio tema com <span className="text-amber-400 font-semibold">10 itens</span>. Cada jogador escolherá o seu Top 5.
+            Escolha uma sugestão ou crie seu próprio tema com{" "}
+            <span className="text-amber-400 font-semibold">5 itens</span>.
+            Todos os jogadores irão ordenar os mesmos itens.
           </p>
 
+          {/* Presets */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
             {DEFAULT_THEME_PRESETS.map((preset, idx) => (
               <button
@@ -113,6 +118,7 @@ export default function SetupScreen({ initialSetup, onComplete }: Props) {
             ))}
           </div>
 
+          {/* Nome do tema personalizado */}
           <div className="mb-4">
             <input
               type="text"
@@ -123,8 +129,9 @@ export default function SetupScreen({ initialSetup, onComplete }: Props) {
             />
           </div>
 
+          {/* 5 itens */}
           <p className="text-white/50 text-sm mb-3">
-            Defina os 10 itens que estarão disponíveis para os jogadores escolherem:
+            Defina os 5 itens que todos os jogadores irão ordenar:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {themeItems.map((item, idx) => (
