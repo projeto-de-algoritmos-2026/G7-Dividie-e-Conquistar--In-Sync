@@ -37,10 +37,10 @@ O **In Sync — Jogo da Sintonia** é uma aplicação web interativa e pedagógi
 
 ```bash
 # 1. clone o repositório
-git clone https://github.com/projeto-de-algoritmos-2026/G7_Greed_PA-26.1-Dungeon-Adventure.git
+git clone https://github.com/projeto-de-algoritmos-2026/G7-Dividir-e-Conquistar--In-Sync.git
 
 # 2. entre na pasta do projeto
-cd G7_Greed_PA-26.1-Dungeon-Adventure
+cd G7-Dividir-e-Conquistar--In-Sync
 
 # 3. instale as dependências
 npm install
@@ -50,17 +50,6 @@ npm run dev
 ```
 
 A aplicação estará disponível em **http://localhost:3000**.
-
-## Uso
-
-Ao abrir a aplicação:
-
-1. Na **tela inicial**, o personagem apresenta a história. Clique no botão para avançar.
-2. Na **galeria de relíquias**, veja todos os 9 itens disponíveis. Clique no botão para continuar.
-3. Na **tela de escolha**, selecione o algoritmo **Knapsack** (as outras opções ficam em vermelho indicando que estão erradas). Após selecionar corretamente, o botão de avançar aparece.
-4. Na **tela de execução**, clique em **INICIAR** e depois em **PRÓXIMO PASSO** para ver cada decisão do algoritmo ambicioso em tempo real. Uma barra de progresso mostra a capacidade sendo preenchida e a fortuna sendo acumulada.
-5. Ao final, a **tela de resultado** exibe a mochila completa com todos os itens selecionados e o valor total obtido.
-
 
 ## Outros
 
