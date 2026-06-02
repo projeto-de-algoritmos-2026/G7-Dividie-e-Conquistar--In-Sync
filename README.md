@@ -56,5 +56,5 @@ A aplicação estará disponível em **http://localhost:3000**.
 O projeto **não utiliza backend separado** — toda a lógica do algoritmo roda nas API Routes do Next.js (server-side), mantendo a arquitetura unificada em um único framework.
 
 ## Video explicativo
-[vÍDEO](https://www.youtube.com/watch?v=arIWizzSzdQ)
+[Vídeo](https://youtu.be/NU1PGA_JMHo)
 
