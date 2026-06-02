@@ -1,7 +1,7 @@
 Temas:
  - Dividir e Conquistar
 
-# In Sync — Jogo da Sintonia
+# In Sync — Jogo de Sintonia
 
 **Conteúdo da Disciplina**: Dividir e Conquistar<br>
 
@@ -14,14 +14,14 @@ Temas:
 
 ## Sobre
 
-O **In Sync — Jogo da Sintonia** é uma aplicação web interativa e pedagógica que demonstra o funcionamento do algoritmo dividir e conquistar **Counting Inversions**. Os jogadores de cada dupla formam uma lista cada um rankeando de acordo com o tema suas preferências, por fim a dupla que tiver menos inversões é a dupla com maior sintonia e vence o jogo.
+O **In Sync — Jogo de Sintonia** é uma aplicação web interativa e pedagógica que demonstra o funcionamento do algoritmo dividir e conquistar **Counting Inversions**. Os jogadores de cada dupla formam uma lista cada um rankeando de acordo com o tema suas preferências, por fim a dupla que tiver menos inversões é a dupla com maior sintonia e vence o jogo.
 
 ## Screenshots
 
-<img width="452" height="550" alt="image" src="https://github.com/user-attachments/assets/46d357a7-e451-48dd-9712-e8ec03661536" />
-<img width="351" height="394" alt="image" src="https://github.com/user-attachments/assets/5330d6a9-1706-4f18-9b46-135bab5f78ba" />
-<img width="387" height="436" alt="image" src="https://github.com/user-attachments/assets/94ef8c21-6240-46d5-ae8e-c72ab1fc08f3" />
-<img width="646" height="401" alt="image" src="https://github.com/user-attachments/assets/39270d1c-9646-42e1-84df-1418c60f6e45" />
+<img width="452" height="550" alt="image" src="assets/01.png" />
+<img width="351" height="394" alt="image" src="assets/02.png" />
+<img width="387" height="436" alt="image" src="assets/03.png" />
+<img width="646" height="401" alt="image" src="assets/04.png" />
 
 
 ## Instalação
@@ -31,7 +31,7 @@ O **In Sync — Jogo da Sintonia** é uma aplicação web interativa e pedagógi
 **Estilização**: Tailwind CSS 4<br>
 **Pré-Requisitos**: Node.js v20+<br>
 ### Acesso deploy
-[In Sync - Jogo da Sintonia](https://g7-greed-pa-26-1-dungeon-adventure.vercel.app/)
+[In Sync - Jogo de Sintonia](https://g7-dividir-e-conquistar-in-sync.vercel.app/)
 
 ### Como rodar localmente
 
